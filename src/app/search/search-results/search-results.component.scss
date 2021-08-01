@@ -1,0 +1,31 @@
+main{
+    .app-main-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        width: 1200px;
+        margin: 0 auto;
+        
+        .card{
+            box-sizing: border-box;
+            width: 263px;
+            height: 327px;
+            padding: 20px;
+            margin: 15px;
+            position: relative;
+            border-radius: 5px;
+            background-color: #E5E5E5;
+        }
+        .app-main-response:nth-child(4n+1){
+            border-bottom: 5px solid yellow;
+        }
+        .app-main-response:nth-child(4n+2){
+            border-bottom: 5px solid #2F80ED;
+        }
+        .app-main-response:nth-child(4n+3){
+            border-bottom: 5px solid green;
+        }
+        .app-main-response:nth-child(4n+4){
+            border-bottom: 5px solid red;
+        }
+    }
+}

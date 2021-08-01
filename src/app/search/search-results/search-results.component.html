@@ -1,0 +1,7 @@
+<main>
+    <div class="app-main-wrapper">
+        <div class="card" *ngFor="let dataItem of sources" style="{{getDate(dataItem.snippet.publishedAt)}}">
+            <app-search-item [data]="dataItem"></app-search-item>
+        </div>
+    </div>
+</main>
