@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import * as resp from '../../../assets/resp.json';
-import { ItemI, SearchResponseI } from '../search-response.model';
+import { ItemI } from '../search-response.model';
+import { SearchResultsService } from './search-results.service';
 
 @Component({
   selector: 'app-search-results',
@@ -8,9 +8,11 @@ import { ItemI, SearchResponseI } from '../search-response.model';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent {
-  dataSource: SearchResponseI = resp;
+  constructor(private dataService: SearchResultsService) {
 
-  sources?: ItemI[] = this.dataSource.items;
+  }
+
+  sources?: ItemI[] = this.dataService.getData();
 
   borderStyle: string = 'border-bottom: 5px solid blue';
 

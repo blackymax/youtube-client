@@ -1,9 +1,9 @@
 <div class="filter-wrapper">
   <p>Sorting by:</p>
   <div class="filter-types">
-    <a href="#">date</a>
-    <a href="#">count of views</a>
+    <a href="#" (click)="filterByDate()">date</a>
+    <a href="#" (click)="filterByViews()">count of views</a>
     <a href="#">by word or sentance</a>
   </div>
-  <input type="text" />
+  <input type="text" (input)="onch($event)"/>
 </div>
