@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as resp from '../../../assets/resp.json';
-import { SearchResponseI } from '../search-response.model';
+import { ItemI, SearchResponseI } from '../search-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,11 @@ export class SearchResultsService {
 
   getData() {
     return this.data.items;
+  }
+
+  getDataItemById(id:string) {
+    const find = this.data.items.find((el) => el.id === id);
+    return find as ItemI;
   }
 
   reorderDataByDate(state: boolean) {

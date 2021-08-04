@@ -18,8 +18,10 @@
     "@angular/forms": "~12.1.0",
     "@angular/platform-browser": "~12.1.0",
     "@angular/platform-browser-dynamic": "~12.1.0",
-    "@angular/router": "~12.1.0",
+    "@angular/platform-server": "^12.1.4",
+    "@angular/router": "^12.1.4",
     "rxjs": "~6.6.0",
+    "safe-pipe": "^1.0.3",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },
