@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemI } from '../../models/search-response.model';
-import { AppService } from '../../services/search-results.service';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-search-results',

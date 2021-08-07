@@ -5,12 +5,14 @@ import { RegistrationComponent } from './auth/pages/registration/registration.co
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 import { PreviewComponent } from './core/components/preview/preview.component';
 import { SearchResultsComponent } from './core/components/search-results/search-results.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { UnauthGuard } from './core/guards/unauth.guard';
 
 const routes: Routes = [
-  { path: '', component: SearchResultsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'watch/:id', component: PreviewComponent },
+  { path: '', component: SearchResultsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [UnauthGuard] },
+  { path: 'registration', component: RegistrationComponent, canActivate: [UnauthGuard] },
+  { path: 'watch/:id', component: PreviewComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchResultsService } from 'src/app/core/services/search-results.service';
+import { SearchResultsService } from 'src/app/core/services/app.service';
 
 @NgModule({
   declarations: [],

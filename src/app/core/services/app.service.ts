@@ -13,7 +13,16 @@ export class AppService {
 
   public results: ItemI[] = this.data.items;
 
-  public user: string = 'user';
+  public user: string;
+
+  constructor() {
+    const us = localStorage.getItem('mail');
+    if (us && localStorage.getItem('token')) {
+      this.user = us;
+    } else {
+      this.user = 'user';
+    }
+  }
 
   getData() {
     return this.results;
