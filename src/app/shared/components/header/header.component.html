@@ -1,0 +1,14 @@
+<header>
+  <div class="header-wrapper">
+    <img src="../../assets/icons/logo.png" alt="youtube_icon" routerLink="/"/>
+    <app-search></app-search>
+    <button>
+      <img src="../../assets/icons/Vector.svg" alt="filter_icon" (click)="changeFilterState()"/>
+    </button>
+    <a class="user-credentials" routerLink="/login">
+      <p>{{appService.user}}</p>
+      <img src="../../assets/icons/login.png" alt="user_icon">
+    </a>
+  </div>
+  <app-filter *ngIf="filterState"></app-filter>
+</header>

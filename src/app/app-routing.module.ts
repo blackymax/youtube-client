@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
-import { LoginComponent } from './auth/login/login.component';
-import { RegistrationComponent } from './auth/registration/registration.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { PreviewComponent } from './preview/preview.component';
-import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { RegistrationComponent } from './auth/pages/registration/registration.component';
+import { NotFoundComponent } from './core/pages/not-found/not-found.component';
+import { PreviewComponent } from './core/components/preview/preview.component';
+import { SearchResultsComponent } from './core/components/search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', component: SearchResultsComponent },

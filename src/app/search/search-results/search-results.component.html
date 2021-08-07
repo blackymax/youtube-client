@@ -1,7 +1,0 @@
-<main>
-    <div class="app-main-wrapper">
-        <div class="card" *ngFor="let dataItem of sources" style="{{getDate(dataItem.snippet.publishedAt)}}">
-            <app-search-item [data]="dataItem" [routerLink]="['watch', dataItem.id]"></app-search-item>
-        </div>
-    </div>
-</main>

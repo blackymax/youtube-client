@@ -1,0 +1,10 @@
+<main>
+  <div class="app-main-wrapper">
+      <app-search-item
+        class="card"
+        *ngFor="let dataItem of dataService.results"
+        [data]="dataItem"
+        [routerLink]="['watch', dataItem.id]"
+      ></app-search-item>
+  </div>
+</main>
