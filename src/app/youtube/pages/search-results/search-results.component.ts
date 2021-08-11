@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemI } from '../../models/search-response.model';
-import { AppService } from '../../services/app.service';
+import { AppService } from '../../../core/services/app.service';
 
 @Component({
   selector: 'app-search-results',
@@ -13,8 +13,4 @@ export class SearchResultsComponent {
   constructor(public dataService: AppService) {
     this.sources = this.dataService.results;
   }
-
-  // ngOnInit() {
-  //   this.sources = this.dataService.results;
-  // }
 }

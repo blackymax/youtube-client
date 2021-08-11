@@ -3,7 +3,7 @@ import * as resp from '../../../assets/resp.json';
 import {
   ItemI,
   SearchResponseI
-} from '../models/search-response.model';
+} from '../../youtube/models/search-response.model';
 
 @Injectable({
   providedIn: 'root'
