@@ -1,0 +1,46 @@
+header{
+    background-color: #E5E5E5;
+    .header-wrapper{
+        width: 570px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        position: relative;
+        img{
+            cursor: pointer;
+        }
+        button{
+            background-color: #2F80ED;
+            padding: 4.5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+        .user-credentials{
+            display: flex;
+            position: absolute;
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+            align-items: center;
+            font-size: 23px;
+            width: 125px;
+            right: -150px;
+            .sign-out{
+                position: absolute;
+                bottom: -50%;
+                width: max-content;
+                padding: 0px 5px;
+            }
+            p{
+                font-size: 16px;
+                font-weight: bold;
+            }
+            img{
+                width: max-content;
+                cursor: pointer;
+            }
+        }
+    }
+}

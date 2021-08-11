@@ -1,0 +1,17 @@
+<main>
+    <div class="registration-wrapper">
+        <h2>Registartion</h2>
+        <label for="f-name">First name</label>
+        <input id="f-name" type="text" [(ngModel)]="firstName">
+        <label for="l-name">Last Name</label>
+        <input id="l-name" type="text" [(ngModel)]="lastName">
+        <label for="mail">Mail</label>
+        <input id="mail" type="text" [(ngModel)]="mail">
+        <label for="password">Mail</label>
+        <input id="password" type="text" [(ngModel)]="password">
+        <div class="controls">
+            <button routerLink="/login">Login</button>
+            <button (click)="setCredentials()">Registration</button>
+        </div>
+    </div>
+</main>
