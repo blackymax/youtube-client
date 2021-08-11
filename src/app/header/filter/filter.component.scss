@@ -1,0 +1,23 @@
+.filter-wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    p{
+        color: #929292;
+    }
+    .filter-types{
+        margin-left: 10px;
+        display: flex;
+        justify-content: space-between;
+        a{
+            display: block;
+            margin-right: 21px;
+        }
+    }
+    
+    input{
+        margin-left: 10px;
+        display: block;
+        outline: none;
+    }
+}

@@ -1,0 +1,29 @@
+header{
+    background-color: #E5E5E5;
+    .header-wrapper{
+        width: 570px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        position: relative;
+        button{
+            background-color: #2F80ED;
+            padding: 4.5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+        .user-credentials{
+            display: flex;
+            position: absolute;
+            align-items: center;
+            font-size: 23px;
+            width: 125px;
+            right: -150px;
+            img{
+                width: max-content;
+            }
+        }
+    }
+}
