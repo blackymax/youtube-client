@@ -4,8 +4,10 @@
     <iframe [src]="url | safe" alt="video"></iframe>
     <div class="additional-info" appBorder
     [date]="data.snippet.publishedAt">
-      <h2>{{ data.snippet.title }}</h2>
-      <span>{{ date }}</span>
+      <div class="preview-title">
+        <h2>{{ data.snippet.title }}</h2>
+        <p>{{ date | date:'fullDate'}}</p>
+      </div>
       <h3>Description</h3>
       <p>{{ data.snippet.description }}</p>
       <div class="counters">

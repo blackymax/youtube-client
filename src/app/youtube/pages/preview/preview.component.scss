@@ -34,11 +34,23 @@ main {
             border-bottom: 5px solid blue;
             background-color: #e5e5e5;
             border-radius: 0 5px 5px 0;
-            h2 {
-                font-size: 20px;
-            }
             p {
                 font-size: 12px;
+            }
+            .preview-title{
+                display: flex;
+                h2 {
+                    font-size: 20px;
+                }
+                p{
+                    font-size: 10px;
+                    color: #828282;
+                    width: 55%;
+                }
+            }
+            h3{
+                font-size: 14px;
+                margin: 35px 0 3px;
             }
             .counters {
                 bottom: 25px;

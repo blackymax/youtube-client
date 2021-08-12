@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as resp from '../../../assets/resp.json';
 import {
   ItemI,
@@ -15,7 +16,7 @@ export class AppService {
 
   public user: string;
 
-  constructor() {
+  constructor(private router: Router) {
     const us = localStorage.getItem('mail');
     if (us && localStorage.getItem('token')) {
       this.user = us;
@@ -30,7 +31,10 @@ export class AppService {
 
   getDataItemById(id: string) {
     const find = this.data.items.find((el) => el.id === id);
-    return find as ItemI;
+    if (find) {
+      return find as ItemI;
+    }
+    return this.router.navigate(['**']);
   }
 
   filterData(temp: string) {

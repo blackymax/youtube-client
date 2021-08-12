@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../core/services/app.service';
 import { ItemI } from '../../models/search-response.model';
 
@@ -11,15 +11,19 @@ import { ItemI } from '../../models/search-response.model';
 export class PreviewComponent {
   id: string;
 
-  data: ItemI;
+  data!: ItemI;
 
   date: Date;
 
   url: string;
 
-  constructor(activatedRoute: ActivatedRoute, private appService: AppService) {
+  constructor(
+    activatedRoute: ActivatedRoute,
+    private appService: AppService,
+    private router: Router
+  ) {
     this.id = activatedRoute.snapshot.paramMap.get('id') || '';
-    this.data = this.appService.getDataItemById(this.id as string);
+    this.data = this.appService.getDataItemById(this.id as string) as ItemI;
     this.date = new Date(this.data.snippet.publishedAt);
     this.url = `https://youtube.com/embed/${this.id}`;
   }

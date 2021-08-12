@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import '@angular/compiler';
 import { BrowserModule } from '@angular/platform-browser';
 import { SafePipeModule } from 'safe-pipe';
 import { FormsModule } from '@angular/forms';
