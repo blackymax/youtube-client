@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppService } from '../../../core/services/app.service';
-import { ItemI } from '../../models/search-response.model';
+import { SearchResponseItemI } from '../../models/search-response.model';
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent {
+export class PreviewComponent implements OnInit, OnDestroy {
   id: string;
 
-  data!: ItemI;
+  data: SearchResponseItemI | void;
 
   date: Date;
 
   url: string;
+
+  subscription: Subscription;
 
   constructor(
     activatedRoute: ActivatedRoute,
@@ -23,8 +26,16 @@ export class PreviewComponent {
     private router: Router
   ) {
     this.id = activatedRoute.snapshot.paramMap.get('id') || '';
-    this.data = this.appService.getDataItemById(this.id as string) as ItemI;
-    this.date = new Date(this.data.snippet.publishedAt);
     this.url = `https://youtube.com/embed/${this.id}`;
+  }
+
+  ngOnInit() {
+    this.subscription = this.appService.results$.subscribe((data) => {
+      this.data = this.appService.getDataItemById(data, this.id);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

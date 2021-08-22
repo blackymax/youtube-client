@@ -3,7 +3,7 @@
   <div class="app-main-wrapper">
       <app-search-item
         class="card"
-        *ngFor="let dataItem of dataService.results"
+        *ngFor="let dataItem of sources; index as i"
         [data]="dataItem"
       ></app-search-item>
   </div>

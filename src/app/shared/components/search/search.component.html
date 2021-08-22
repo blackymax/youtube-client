@@ -1,4 +1,4 @@
 <div class="app-search">
-    <input type="text" placeholder="What are you want to find out?">
+    <input type="text" placeholder="What are you want to find out?" [(ngModel)]="searchString" (input)="onInput()">
     <input type="submit" value="search">
 </div>

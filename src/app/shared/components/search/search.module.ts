@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchResultsComponent } from './search-results/search-results.component';
+import { AppService } from 'src/app/core/services/app.service';
+import { SearchResultsComponent } from '../../../youtube/pages/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  providers: [AppService]
 })
 export class SearchModule { }

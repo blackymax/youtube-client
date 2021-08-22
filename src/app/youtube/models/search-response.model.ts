@@ -5,12 +5,36 @@ export interface SearchResponseI {
     totalResults: number;
     resultsPerPage: number;
   };
-  items: ItemI[];
+  items: SearchResponseItemI[];
 }
-export interface ItemI {
+
+export interface SearchResI {
   kind: string;
   etag: string;
   id: string;
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: ThumbnailI;
+      high: ThumbnailI;
+      standard: ThumbnailI;
+      maxres: ThumbnailI;
+    };
+    channelTitle: string;
+    liveBroadcastContent: string;
+  };
+}
+export interface SearchResponseItemI {
+  kind: string;
+  etag: string;
+  // id: string;
+  id:{
+    kind:string;
+    videoId: string;
+  };
   snippet: {
     publishedAt: string;
     channelId: string;

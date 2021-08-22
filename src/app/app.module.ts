@@ -3,6 +3,7 @@ import '@angular/compiler';
 import { BrowserModule } from '@angular/platform-browser';
 import { SafePipeModule } from 'safe-pipe';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { SearchItemComponent } from './youtube/components/search-item/search-item.component';
@@ -16,6 +17,7 @@ import { SearchResultsComponent } from './youtube/pages/search-results/search-re
 import { RegistrationComponent } from './auth/pages/registration/registration.component';
 import { SafePipe } from './shared/pipes/safe-pipe/safe.pipe';
 import { BorderDirective } from './shared/directives/border.directive';
+import { ParamInterceptor } from './core/services/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,18 @@ import { BorderDirective } from './shared/directives/border.directive';
     SafePipe,
     BorderDirective
   ],
-  imports: [BrowserModule, AppRoutingModule, SafePipeModule, FormsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SafePipeModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: ParamInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

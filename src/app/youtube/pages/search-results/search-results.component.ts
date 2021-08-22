@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ItemI } from '../../models/search-response.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SearchResponseItemI } from '../../models/search-response.model';
 import { AppService } from '../../../core/services/app.service';
 
 @Component({
@@ -7,10 +8,31 @@ import { AppService } from '../../../core/services/app.service';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent {
-  sources: ItemI[];
+export class SearchResultsComponent implements OnInit, OnDestroy {
+  sources: SearchResponseItemI[] = [];
+
+  sourcesSub: SearchResponseItemI[] = [];
+
+  subscription: Subscription;
+
+  subscriptionSub: Subscription;
 
   constructor(public dataService: AppService) {
-    this.sources = this.dataService.results;
+    // this.subscription = this.dataService.req$.subscribe((data) => {
+    //   this.sources = this.dataService.getDataItems(data);
+    // });
+  }
+
+  ngOnInit() {
+    this.subscription = this.dataService.results$.subscribe((data) => {
+      this.sources = data;
+    });
+    this.subscriptionSub = this.dataService.resultsSubs$.subscribe((data) => {
+      this.sourcesSub = data;
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

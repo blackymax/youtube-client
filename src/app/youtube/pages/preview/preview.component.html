@@ -3,29 +3,29 @@
   <div class="preview-wrapper">
     <iframe [src]="url | safe" alt="video"></iframe>
     <div class="additional-info" appBorder
-    [date]="data.snippet.publishedAt">
+    [date]="data?.snippet?.publishedAt!">
       <div class="preview-title">
-        <h2>{{ data.snippet.title }}</h2>
+        <h2>{{ data?.snippet?.title }}</h2>
         <p>{{ date | date:'fullDate'}}</p>
       </div>
       <h3>Description</h3>
-      <p>{{ data.snippet.description }}</p>
+      <p>{{ data?.snippet?.description }}</p>
       <div class="counters">
         <div class="preview-views">
           <img src="../../../assets/icons/viewed.png" alt="" />
-          <span>{{ data.statistics.viewCount }}</span>
+          <span>{{ data?.statistics?.viewCount }}</span>
         </div>
         <div class="preview-likes">
           <img src="../../../assets/icons/liked.png" alt="" />
-          <span>{{ data.statistics.likeCount }}</span>
+          <span>{{ data?.statistics?.likeCount }}</span>
         </div>
         <div class="preview-dislikes">
           <img src="../../../assets/icons/dislike.png" alt="" />
-          <span>{{ data.statistics.dislikeCount }}</span>
+          <span>{{ data?.statistics?.dislikeCount }}</span>
         </div>
         <div class="preview-comments">
           <img src="../../../assets/icons/comment.png" alt="" />
-          <span>{{ data.statistics.commentCount }}</span>
+          <span>{{ data?.statistics?.commentCount }}</span>
         </div>
       </div>
     </div>
