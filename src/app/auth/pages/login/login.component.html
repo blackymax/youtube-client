@@ -1,0 +1,16 @@
+<app-header></app-header>
+<main>
+    <div class="login-wrapper">
+        <h2>Login</h2>
+        <label for="login">Login</label>
+        <input id="login" type="text" [(ngModel)]="login">
+        <span *ngIf="!loginState && loginState !== undefined">User does not exist</span>
+        <label for="password">password</label>
+        <input id="password" type="text" [(ngModel)]="password">
+        <span *ngIf="!passwordState && passwordState !== undefined">Incorrect password</span>
+        <div class="controls">
+            <button routerLink="/registration">Registration</button>
+            <button (click)="checkData()">Login</button>
+        </div>
+    </div>
+</main>

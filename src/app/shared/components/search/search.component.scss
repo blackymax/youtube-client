@@ -1,0 +1,17 @@
+input{
+    width: 396px;
+    height: 24px;
+    outline: none;
+    text-indent: 5px;
+    font-size: 12px;
+}
+input[type=submit]{
+    background-color: #2F80ED;
+    width: 80px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    color: white;
+    font-weight: 400;
+    text-indent: 0px;
+    font-size: 12px;
+}
