@@ -2,22 +2,22 @@
 [date]="data.snippet.publishedAt">
   <img class="view" src="{{ data.snippet.thumbnails.high.url }}" />
   <div class="app-main-wrapper-marks">
-    <!-- <div class="views">
+    <div class="views">
       <img src="../../../assets/icons/viewed.png" alt="" />
-      <span>{{ data.statistics.viewCount }}</span>
-    </div> -->
-    <!-- <div class="likes">
+      <span>{{ dataCurrent?.statistics?.viewCount }}</span>
+    </div>
+     <div class="likes">
       <img src="../../../assets/icons/liked.png" alt="" />
-      <span>{{ data.statistics.likeCount }}</span>
+      <span>{{ dataCurrent?.statistics?.likeCount }}</span>
     </div>
     <div class="dislikes">
       <img src="../../../assets/icons/dislike.png" alt="" />
-      <span>{{ data.statistics.dislikeCount }}</span>
+      <span>{{ dataCurrent?.statistics?.dislikeCount }}</span>
     </div> -->
-    <!-- <div class="comments">
+    <div class="comments">
       <img src="../../../assets/icons/comment.png" alt="" />
-      <span>{{ data.statistics.commentCount }}</span>
-    </div> -->
+      <span>{{ dataCurrent?.statistics?.commentCount }}</span>
+    </div>
   </div>
   <p>{{ data.snippet.title }}</p>
   <button [routerLink]="['watch', data.id]">more...</button>

@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SearchResponseItemI } from '../../models/search-response.model';
+import {
+  SearchResI,
+  SearchResponseItemI
+} from '../../models/search-response.model';
 import { AppService } from '../../../core/services/app.service';
 
 @Component({
@@ -11,28 +14,33 @@ import { AppService } from '../../../core/services/app.service';
 export class SearchResultsComponent implements OnInit, OnDestroy {
   sources: SearchResponseItemI[] = [];
 
-  sourcesSub: SearchResponseItemI[] = [];
+  presources: SearchResI[] = [];
+
+  sourcesSub: SearchResI[] = [];
 
   subscription: Subscription;
 
   subscriptionSub: Subscription;
 
-  constructor(public dataService: AppService) {
-    // this.subscription = this.dataService.req$.subscribe((data) => {
-    //   this.sources = this.dataService.getDataItems(data);
-    // });
-  }
+  constructor(public dataService: AppService) {}
 
   ngOnInit() {
-    this.subscription = this.dataService.results$.subscribe((data) => {
-      this.sources = data;
+    this.subscription = this.dataService.resultsSubs$.subscribe((data) => {
+      this.presources = data;
     });
-    this.subscriptionSub = this.dataService.resultsSubs$.subscribe((data) => {
-      this.sourcesSub = data;
+    this.subscriptionSub = this.dataService.results$.subscribe((data) => {
+      this.sources = this.presources.map(
+        (el, i) => ({
+          ...el,
+          statistics: data[i].statistics,
+          id: el.id.videoId
+        } as SearchResponseItemI)
+      );
     });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscriptionSub.unsubscribe();
   }
 }

@@ -8,10 +8,23 @@ export interface SearchResponseI {
   items: SearchResponseItemI[];
 }
 
+export interface SearchResponseFirstI {
+  kind: string;
+  etag: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+  items: SearchResI[];
+}
+
 export interface SearchResI {
   kind: string;
   etag: string;
-  id: string;
+  id: {
+    kind:string;
+    videoId: string;
+  };
   snippet: {
     publishedAt: string;
     channelId: string;
@@ -30,11 +43,7 @@ export interface SearchResI {
 export interface SearchResponseItemI {
   kind: string;
   etag: string;
-  // id: string;
-  id:{
-    kind:string;
-    videoId: string;
-  };
+  id: string;
   snippet: {
     publishedAt: string;
     channelId: string;

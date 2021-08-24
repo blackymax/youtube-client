@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import {
   SearchResponseItemI,
-  SearchResponseI
+  SearchResponseI,
+  SearchResponseFirstI,
+  SearchResI
 } from '../../youtube/models/search-response.model';
 
 const InitState: SearchResponseI = {
@@ -36,9 +39,9 @@ export class AppService {
   public results$: Observable<SearchResponseItemI[]> =
   this.results.asObservable();
 
-  public resultsSubs = new BehaviorSubject<SearchResponseItemI[]>([]);
+  public resultsSubs = new BehaviorSubject<SearchResI[]>([]);
 
-  public resultsSubs$: Observable<SearchResponseItemI[]> =
+  public resultsSubs$: Observable<SearchResI[]> =
   this.resultsSubs.asObservable();
 
   public searchString = new BehaviorSubject<string>('');
@@ -54,21 +57,16 @@ export class AppService {
   private dataSub: Subscription;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.http
-      .get<SearchResponseI>(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet${
-        this.searchString.value && `&q=${this.searchString.value}`
-      }`
-    )
-      .subscribe((data: SearchResponseI) => {
-        const idArray = data.items.map((el) => el.id.videoId);
-        this.resultsSubs.next(data.items);
-        this.requests.next(idArray.join(','));
-      });
+    this.getResponse();
+    this.searchString$.pipe(debounceTime(1000)).subscribe(() => {
+      this.getResponse();
+    });
     this.requests$.subscribe((data) => {
       this.http
         .get<SearchResponseI>(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet${data && `&id=${data}`}`
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics${
+          data && `&id=${data}`
+        }`
       )
         .subscribe((dat) => {
           this.results.next(dat.items);
@@ -83,6 +81,20 @@ export class AppService {
     }
   }
 
+  getResponse() {
+    return this.http
+      .get<SearchResponseFirstI>(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet${
+        this.searchString.value && `&q=${this.searchString.value}`
+      }`
+    )
+      .subscribe((data: SearchResponseFirstI) => {
+        const idArray = data.items.map((el) => el.id.videoId);
+        this.resultsSubs.next(data.items);
+        this.requests.next(idArray.join(','));
+      });
+  }
+
   getInputValue(x: string) {
     this.searchString.next(x);
   }
@@ -92,7 +104,7 @@ export class AppService {
     data: SearchResponseItemI[],
     id: string
   ): SearchResponseItemI | void {
-    const find = data.find((el) => el.id.videoId === id);
+    const find = data.find((el) => el.id === id);
     if (find) {
       return find;
     }
@@ -100,15 +112,15 @@ export class AppService {
   }
 
   filterData(temp: string) {
-    this.resultsSub = this.results$.subscribe((data) => {
+    this.resultsSub = this.resultsSubs$.subscribe((data) => {
       const results = data.filter((el) => el.snippet.title.includes(temp));
-      this.results.next(results);
+      this.resultsSubs.next(results);
     });
     this.resultsSub.unsubscribe();
   }
 
   reorderDataByDate(state: boolean) {
-    this.resultsSub = this.results$.subscribe((data) => {
+    this.resultsSub = this.resultsSubs$.subscribe((data) => {
       const results = data.sort((a, b) => {
         const [old, next] = [
           new Date(a.snippet.publishedAt).getTime(),
@@ -116,7 +128,7 @@ export class AppService {
         ];
         return state ? ((old - next) as number) : ((next - old) as number);
       });
-      this.results.next(results);
+      this.resultsSubs.next(results);
     });
     this.resultsSub.unsubscribe();
   }

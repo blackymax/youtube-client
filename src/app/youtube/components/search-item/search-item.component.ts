@@ -18,14 +18,14 @@ export class SearchItemComponent implements OnInit {
 
   subscriptionSub: Subscription;
 
-  dataCurrent: any;
+  dataCurrent: SearchResponseItemI | undefined;
 
   constructor(public appService: AppService) {}
 
   ngOnInit() {
-    this.subscriptionSub = this.appService.resultsSubs$.subscribe((data) => {
+    this.subscriptionSub = this.appService.results$.subscribe((data) => {
       this.sourcesSub = data;
+      this.dataCurrent = this.sourcesSub.find((el) => el.id === this.data.id);
     });
-    this.dataCurrent = this.sourcesSub.find((el) => el.id === this.data.id);
   }
 }

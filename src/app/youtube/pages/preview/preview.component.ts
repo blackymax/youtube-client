@@ -12,7 +12,7 @@ import { SearchResponseItemI } from '../../models/search-response.model';
 export class PreviewComponent implements OnInit, OnDestroy {
   id: string;
 
-  data: SearchResponseItemI | void;
+  data: SearchResponseItemI | undefined;
 
   date: Date;
 
@@ -31,7 +31,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.appService.results$.subscribe((data) => {
-      this.data = this.appService.getDataItemById(data, this.id);
+      this.data = data.find((el) => el.id === this.id);
     });
   }
 
