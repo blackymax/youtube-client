@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from 'src/app/core/services/app.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   login: string = '';
 
   password: string = '';
@@ -16,10 +17,18 @@ export class LoginComponent {
 
   passwordState: boolean;
 
-  token:string = '123';
+  token: string = '123';
 
-  constructor(private router: Router, private appService: AppService) {
+  userName:string = '';
 
+  loginSub: Subscription;
+
+  constructor(private router: Router, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.loginSub = this.authService.isLogged$.subscribe((value) => {
+      this.loginState = value;
+    });
   }
 
   checkData() {
@@ -27,12 +36,18 @@ export class LoginComponent {
     this.passwordState = this.password === localStorage.getItem('password');
     if (this.loginState && this.passwordState) {
       this.sendToken();
+      this.authService.logIn();
+      this.authService.user.next(this.login);
     }
   }
 
   sendToken() {
     localStorage.setItem('token', this.token);
-    this.appService.user = this.login;
+    this.authService.user.next(this.login);
     this.router.navigate(['/']);
+  }
+
+  ngOnDestroy() {
+    this.loginSub.unsubscribe();
   }
 }

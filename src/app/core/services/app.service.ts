@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import {
   SearchResponseItemI,
   SearchResponseI,
@@ -50,53 +50,39 @@ export class AppService {
 
   public currentResults: SearchResponseItemI[];
 
-  public user: string;
-
-  private resultsSub: Subscription;
+  private resultsSub$: Subscription;
 
   private dataSub: Subscription;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.getResponse();
-    this.searchString$.pipe(debounceTime(1000)).subscribe(() => {
-      this.getResponse();
-    });
-    this.requests$.subscribe((data) => {
-      this.http
-        .get<SearchResponseI>(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics${
-          data && `&id=${data}`
-        }`
-      )
-        .subscribe((dat) => {
-          this.results.next(dat.items);
-        });
-    });
-
-    const us = localStorage.getItem('mail');
-    if (us && localStorage.getItem('token')) {
-      this.user = us;
-    } else {
-      this.user = 'user';
-    }
+    this.getData();
   }
 
-  getResponse() {
-    return this.http
+  getData(temp = 'a') {
+    this.dataSub = this.http
       .get<SearchResponseFirstI>(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet${
-        this.searchString.value && `&q=${this.searchString.value}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet${`&q=${temp}`
       }`
     )
-      .subscribe((data: SearchResponseFirstI) => {
-        const idArray = data.items.map((el) => el.id.videoId);
-        this.resultsSubs.next(data.items);
-        this.requests.next(idArray.join(','));
+      .pipe(
+        debounceTime(2000),
+        switchMap((data) => {
+          const idArray = data.items.map((el) => el.id.videoId).join(',');
+          this.resultsSubs.next(data.items);
+          return this.http.get<SearchResponseI>(
+            `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics${
+              idArray && `&id=${idArray}`
+            }`
+          );
+        })
+      )
+      .subscribe((dat) => {
+        this.results.next(dat.items);
       });
   }
 
   getInputValue(x: string) {
-    this.searchString.next(x);
+    this.getData(x);
   }
 
   // eslint-disable-next-line consistent-return
@@ -112,38 +98,29 @@ export class AppService {
   }
 
   filterData(temp: string) {
-    this.resultsSub = this.resultsSubs$.subscribe((data) => {
-      const results = data.filter((el) => el.snippet.title.includes(temp));
-      this.resultsSubs.next(results);
-    });
-    this.resultsSub.unsubscribe();
+    const results = this.results.value.filter((el) => el.snippet.title.includes(temp));
+    this.results.next(results);
   }
 
   reorderDataByDate(state: boolean) {
-    this.resultsSub = this.resultsSubs$.subscribe((data) => {
-      const results = data.sort((a, b) => {
-        const [old, next] = [
-          new Date(a.snippet.publishedAt).getTime(),
-          new Date(b.snippet.publishedAt).getTime()
-        ];
-        return state ? ((old - next) as number) : ((next - old) as number);
-      });
-      this.resultsSubs.next(results);
+    const results = this.results.value.sort((a, b) => {
+      const [old, next] = [
+        new Date(a.snippet.publishedAt).getTime(),
+        new Date(b.snippet.publishedAt).getTime()
+      ];
+      return state ? ((old - next) as number) : ((next - old) as number);
     });
-    this.resultsSub.unsubscribe();
+    this.results.next(results);
   }
 
   reorderDataByViews(state: boolean) {
-    this.resultsSub = this.results$.subscribe((data) => {
-      const results = data.sort((a, b) => {
-        const [old, next] = [
-          Number(a.statistics.viewCount),
-          Number(b.statistics.viewCount)
-        ];
-        return state ? ((old - next) as number) : ((next - old) as number);
-      });
-      this.results.next(results);
+    const results = this.results.value.sort((a, b) => {
+      const [old, next] = [
+        Number(a.statistics.viewCount),
+        Number(b.statistics.viewCount)
+      ];
+      return state ? ((old - next) as number) : ((next - old) as number);
     });
-    this.resultsSub.unsubscribe();
+    this.results.next(results);
   }
 }

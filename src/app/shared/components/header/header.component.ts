@@ -1,19 +1,33 @@
-import { Component } from '@angular/core';
-import { AppService } from 'src/app/core/services/app.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   filterState: boolean = false;
 
   activeState: boolean = !!localStorage.getItem('token');
 
-  exitState:boolean = false;
+  exitState: boolean = false;
 
-  constructor(public appService: AppService) {
+  userName: BehaviorSubject<string> = new BehaviorSubject('');
+
+  userNameSub: Subscription;
+
+  constructor(public authService: AuthService) {
+    this.authService.user$.subscribe((value) => {
+      this.userName.next(value);
+    });
+  }
+
+  ngOnInit() {
+    this.authService.user$.subscribe((value) => {
+      this.userName.next(value);
+    });
   }
 
   changeFilterState() {
@@ -28,9 +42,14 @@ export class HeaderComponent {
 
   clearCreds() {
     localStorage.removeItem('token');
+    this.authService.logOut();
     this.changeExitState();
     if (this.exitState) {
       this.exitState = !this.exitState;
     }
+  }
+
+  ngOnDestroy() {
+    this.userNameSub.unsubscribe();
   }
 }

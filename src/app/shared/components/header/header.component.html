@@ -6,7 +6,7 @@
       <img src="../../assets/icons/Vector.svg" alt="filter_icon" (click)="changeFilterState()"/>
     </button>
     <a class="user-credentials" routerLink="/login" (click)="changeExitState()">
-      <p>{{appService.user}}</p>
+      <p>{{userName.value}}</p>
       <img src="../../../../assets/icons/user-cred.png" alt="user_icon">
       <button class="sign-out" *ngIf="exitState" (click)="clearCreds()">Sign out</button>
     </a>
