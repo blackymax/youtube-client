@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+}
+
+main{
+    width: 100vw;
+    height: calc(100vh - 80px);
+    padding-top: 45px;
+    .registration-wrapper{
+        margin: 0 auto;
+        width: 350px;
+        height: max-content;
+        padding: 25px 20px;
+        background-color: #F2F2F2;
+        label{
+            display: block;
+            color: #828282;
+            margin-top: 5px;
+        }
+        input{
+            margin-top: 3px;
+            display: block;
+            background-color: #E0E0E0;
+            padding: 13px 8px;
+            font-size: 10px;
+            width: 100%;
+        }
+        .controls{
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 22px;
+            button{
+                // background-color: #2F80ED;
+                padding: 6px 32px;
+                width: 124px;
+                height: 30px;
+                border-radius: 5px;
+            }
+            button:nth-child(2){
+                background-color: #2F80ED;
+            }
+        }
+    }
+}

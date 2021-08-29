@@ -1,0 +1,16 @@
+<main>
+    <div class="admin-page-wrapper">
+        <h2>Create new card</h2>
+        <label for="title-name">Title</label>
+        <input id="title-name" type="text" [(ngModel)]="titleName">
+        <label for="description">Description</label>
+        <input id="description" type="text" [(ngModel)]="description">
+        <label for="image-source">Img</label>
+        <input id="image-source" type="text" [(ngModel)]="imgSrc">
+        <label for="video-source">Link video</label>
+        <input id="video-source" type="text" [(ngModel)]="videoSrc">
+        <div class="controls">
+            <button (click)="sendCardToStore()">Create card</button>
+        </div>
+    </div>
+</main>

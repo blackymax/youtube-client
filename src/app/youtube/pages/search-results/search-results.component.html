@@ -1,0 +1,14 @@
+<main>
+  <div class="app-main-wrapper">
+      <app-search-item
+        class="card"
+        *ngFor="let dataItem of sources"
+        [data]="dataItem"
+      ></app-search-item>
+      <app-custom-search-item
+        class="card"
+        *ngFor="let dataI of subSources"
+        [data]="dataI"
+      ></app-custom-search-item>
+  </div>
+</main>
