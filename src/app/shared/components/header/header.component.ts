@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
@@ -14,19 +14,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   exitState: boolean = false;
 
-  userName: BehaviorSubject<string> = new BehaviorSubject('');
+  userName: string = 'user';
 
   userNameSub: Subscription;
 
   constructor(public authService: AuthService) {
     this.authService.user$.subscribe((value) => {
-      this.userName.next(value);
+      this.userName = value;
     });
   }
 
   ngOnInit() {
     this.authService.user$.subscribe((value) => {
-      this.userName.next(value);
+      this.userName = value;
     });
   }
 

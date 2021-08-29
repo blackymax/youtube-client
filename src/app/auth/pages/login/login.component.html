@@ -3,7 +3,7 @@
         <h2>Login</h2>
         <label for="login">Login</label>
         <input id="login" type="text" [(ngModel)]="login">
-        <span *ngIf="!loginState && loginState !== undefined">User does not exist</span>
+        <span *ngIf="!isCorrectLogin && isCorrectLogin !== undefined">User does not exist</span>
         <label for="password">password</label>
         <input id="password" type="text" [(ngModel)]="password">
         <span *ngIf="!passwordState && passwordState !== undefined">Incorrect password</span>

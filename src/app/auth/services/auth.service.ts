@@ -24,6 +24,7 @@ export class AuthService {
 
   logOut() {
     this.isLogged.next(false);
+    this.user.next('user');
   }
 
   logIn() {

@@ -34,6 +34,12 @@ const routes: Routes = [
     )
   },
   {
+    path: 'admin-page',
+    loadChildren: () => import('./core/pages/admin/admin.module').then(
+      (m) => m.AdminModule
+    )
+  },
+  {
     path: '**',
     loadChildren: () => import('./core/pages/not-found/not-found.module').then(
       (m) => m.NotFoundModule

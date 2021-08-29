@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginState: boolean;
 
+  isCorrectLogin: boolean = true;
+
   passwordState: boolean;
 
   token: string = '123';
@@ -32,9 +34,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   checkData() {
-    this.loginState = this.login === localStorage.getItem('mail');
+    this.isCorrectLogin = this.login === localStorage.getItem('mail');
     this.passwordState = this.password === localStorage.getItem('password');
-    if (this.loginState && this.passwordState) {
+    if (this.isCorrectLogin && this.passwordState) {
       this.sendToken();
       this.authService.logIn();
       this.authService.user.next(this.login);
